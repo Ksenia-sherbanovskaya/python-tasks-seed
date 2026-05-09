@@ -25,3 +25,30 @@ def test_shorts_decode():
     assert base85ed.decode(b"F){") == b"12"
     assert base85ed.decode(b"F)}j") == b"123"
     assert base85ed.decode(b"F)}kW") == b"1234"
+
+def test_empty_string():
+    assert base85ed.encode(b"") == b""
+    assert base85ed.decode(b"") == b""
+
+def test_zeros():
+    original = b"\x00\x00\x00\x00"
+    encoded = base85ed.encode(original)
+    decoded = base85ed.decode(encoded)
+    assert original == decoded
+
+def test_string():
+    original = b"hi everyone"
+    encoded = base85ed.encode(original)
+    decoded = base85ed.decode(encoded)
+    assert original == decoded
+
+def test_random_data():
+    import random
+    random.seed(42)
+    for i in range(17):
+        original = bytes(random.randint(0,255) for j in range(i))
+        assert original == base85ed.decode(base85ed.encode(original))
+
+def test_not_multiples_4():
+    for b in (b"A", b"AB", b"ABC"):
+        assert b == base85ed.decode(base85ed.encode(b))
