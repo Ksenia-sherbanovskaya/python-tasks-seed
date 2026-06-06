@@ -3,7 +3,7 @@
 ## Состояние
 
 - [![Lint & Typecheck](../../actions/workflows/lint-typecheck.yml/badge.svg)](../../actions/workflows/lint-typecheck.yml) — статический анализ
-- [![Tests](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml) — тесты
+- [![Tests](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml) — тесты 
 
 ## Задания
 
