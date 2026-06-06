@@ -62,4 +62,3 @@ def decode(b: bytes):
   
     expected_bytes = (len(b) * 4) // 5
     return bytes(res[:expected_bytes])
-
