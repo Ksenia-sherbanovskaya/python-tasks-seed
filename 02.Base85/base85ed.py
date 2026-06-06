@@ -1,4 +1,3 @@
-
 """
 Base85 encoder and decoder
 """
@@ -8,6 +7,7 @@ from beartype import beartype
 
 a = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~"
 
+
 @beartype
 def encode(b: bytes):
     if len(b) == 0:
@@ -15,10 +15,10 @@ def encode(b: bytes):
     res = ""
 
     for i in range(0, len(b), 4):
-        chunk = b[i:i+4]
+        chunk = b[i : i + 4]
 
         while len(chunk) < 4:
-            chunk = chunk + b'\x00'
+            chunk = chunk + b"\x00"
 
         n = (chunk[0] << 24) | (chunk[1] << 16) | (chunk[2] << 8) | chunk[3]
 
@@ -28,38 +28,36 @@ def encode(b: bytes):
             n //= 85
 
         ch.reverse()
-        enc = ''.join(ch)
+        enc = "".join(ch)
 
-        l = len(b[i:i + 4])
-        res += enc[:l + 1]
+        l = len(b[i : i + 4])
+        res += enc[: l + 1]
 
-    return res.encode('ascii')
+    return res.encode("ascii")
+
 
 @beartype
 def decode(b: bytes):
     if len(b) == 0:
         return b""
-    
-    t = b.decode('ascii')
-    
+
+    t = b.decode("ascii")
 
     while len(t) % 5 != 0:
-        t += '~'
-    
+        t += "~"
+
     res = bytearray()
-    
+
     for i in range(0, len(t), 5):
-        bl = t[i:i+5]
+        bl = t[i : i + 5]
         val = 0
         for char in bl:
             val = val * 85 + a.index(char)
-        
+
         res.append((val >> 24) & 0xFF)
         res.append((val >> 16) & 0xFF)
         res.append((val >> 8) & 0xFF)
         res.append(val & 0xFF)
-    
-  
+
     expected_bytes = (len(b) * 4) // 5
     return bytes(res[:expected_bytes])
-    
