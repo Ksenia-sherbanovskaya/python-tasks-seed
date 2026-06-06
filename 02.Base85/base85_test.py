@@ -37,6 +37,7 @@ def test_zeros():
     assert original == decoded
 
 def test_string():
+    
     original = b"hi everyone"
     encoded = base85ed.encode(original)
     decoded = base85ed.decode(encoded)
